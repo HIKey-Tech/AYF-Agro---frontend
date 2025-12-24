@@ -11,12 +11,13 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function AdminDashboardPage() {
     return (
         <DashboardLayout userRole="admin">
             <div className="space-y-6 animate-fade-in">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div className="flex items-center gap-4">
                         <div>
                             <input
@@ -35,10 +36,15 @@ export default function AdminDashboardPage() {
                         </div>
                     </div>
 
-                    <Button className="btn-primary-gradient">
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add New Farm
-                    </Button>
+                    <RouterLink to="/admin/farm/new" className="self-end md:self-auto">
+                        <Button
+                            className="btn-primary-gradient flex items-center px-4 py-2 rounded-lg font-semibold shadow-lg transition-transform hover:scale-[1.04] focus:outline-none"
+                            style={{ minWidth: 200, fontSize: "1rem" }}
+                        >
+                            <Plus className="w-5 h-5 mr-2" />
+                            <span>Add New Opportunity</span>
+                        </Button>
+                    </RouterLink>
                 </div>
 
                 <div className="bg-card rounded-xl border border-border overflow-hidden">

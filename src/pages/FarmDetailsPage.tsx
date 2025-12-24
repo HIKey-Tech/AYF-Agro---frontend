@@ -13,7 +13,19 @@ import {
     calculateFundingProgress,
     // calculateExpectedReturn
 } from "@/lib/mock-data";
-import { ArrowRight, Plus, Shield, MapPin, Clock, TrendingUp, Target } from "lucide-react";
+import {
+    ArrowRight,
+    Plus,
+    Shield,
+    MapPin,
+    Clock,
+    TrendingUp,
+    Target,
+    Users,
+    Leaf,
+    DollarSign,
+    CalendarCheck
+} from "lucide-react";
 import { toast } from "sonner";
 
 export default function FarmDetailsPage() {
@@ -37,7 +49,6 @@ export default function FarmDetailsPage() {
 
     const progress = calculateFundingProgress(farm.currentAmount, farm.targetAmount);
     const amount = parseFloat(investmentAmount) || 0;
-    // const expectedReturn = calculateExpectedReturn(amount, farm.roiPercentage);
 
     const expectedPayoutDate = new Date();
     expectedPayoutDate.setMonth(expectedPayoutDate.getMonth() + farm.durationMonths);
@@ -47,7 +58,6 @@ export default function FarmDetailsPage() {
             toast.error(`Minimum investment is ${formatFullCurrency(farm.minInvestment)}`);
             return;
         }
-
         toast.success("Investment Successful!", {
             description: `Your investment in '${farm.name}' is confirmed.`,
         });
@@ -62,11 +72,12 @@ export default function FarmDetailsPage() {
             <DashboardLayout userRole="investor">
                 <div className="max-w-4xl mx-auto animate-fade-in">
                     <h1 className="text-3xl font-bold text-foreground mb-2">{farm.name}</h1>
-                    <p className="text-muted-foreground mb-8">Enter your investment details below to proceed.</p>
+                    <p className="text-muted-foreground mb-8">
+                        Enter your investment details below to proceed.
+                    </p>
 
                     <div className="flex flex-col lg:flex-row gap-8">
                         <div className="flex-1" />
-
                         <div className="w-full lg:w-96">
                             <div className="bg-card rounded-xl border border-border p-6">
                                 <div className="mb-6">
@@ -122,7 +133,7 @@ export default function FarmDetailsPage() {
                                 </div>
 
                                 <Button
-                                    className="w-full btn-primary-gradient h-12"
+                                    className="w-full h-12 bg-primary text-primary-foreground font-semibold rounded-lg"
                                     onClick={handleInvest}
                                 >
                                     Proceed to Payment
@@ -148,74 +159,147 @@ export default function FarmDetailsPage() {
         );
     }
 
+    // --- New component for Investment Details Row (matches screenshot) ---
+    function InvestmentDetail({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value: string }) {
+        return (
+            <div className="flex flex-col items-center gap-0.5 min-w-[95px]">
+                <div className="rounded-full bg-muted flex items-center justify-center h-9 w-9 mb-1 border border-border">
+                    <Icon className="w-5 h-5 text-primary" />
+                </div>
+                <div className="text-xs text-muted-foreground">{label}</div>
+                <div className="font-semibold text-base text-foreground">{value}</div>
+            </div>
+        );
+    }
+
     return (
         <DashboardLayout userRole="investor">
             <div className="max-w-6xl mx-auto animate-fade-in">
                 {/* Hero Image */}
-                <div className="relative h-64 md:h-80 rounded-xl overflow-hidden mb-6">
+                <div className="relative h-64 md:h-80 rounded-xl overflow-hidden mb-8 border border-border">
                     <img
                         src={farm.image}
                         alt={farm.name}
                         className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-transparent" />
-                    <div className="absolute bottom-6 left-6">
-                        <Badge variant="secondary" className="mb-2">Verified Project</Badge>
-                        <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground">{farm.name}</h1>
-                        <p className="text-primary-foreground/80">Cultivating Prosperity in Rural Liberia</p>
+                    <div className="absolute inset-0 bg-black/40" />
+                    <div className="absolute bottom-6 left-6 flex flex-col gap-1">
+                        <Badge variant="secondary" className="mb-1 w-fit px-3 py-1.5 text-xs tracking-wide">Verified Project</Badge>
+                        <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground drop-shadow-none">{farm.name}</h1>
+                        <p className="text-primary-foreground/80 font-medium text-base">Cultivating Prosperity in Rural Liberia</p>
                     </div>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-8">
+                {/* Tabs and Sidebar layout */}
+                <div className="flex flex-col lg:flex-row gap-10">
                     {/* Main Content */}
                     <div className="flex-1">
                         <Tabs defaultValue="overview">
-                            <TabsList>
-                                <TabsTrigger value="overview">Overview</TabsTrigger>
-                                <TabsTrigger value="updates">Updates (2)</TabsTrigger>
+                            <TabsList className="mb-1 border-b border-border bg-transparent px-0 py-0 gap-2">
+                                <TabsTrigger value="overview" className="text-md px-3 py-1 font-medium border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary">Overview</TabsTrigger>
+                                <TabsTrigger value="updates" className="text-md px-3 py-1 font-medium border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary">Updates (2)</TabsTrigger>
                             </TabsList>
 
-                            <TabsContent value="overview" className="mt-6">
-                                <div className="prose prose-neutral max-w-none">
-                                    <h2 className="text-xl font-bold mb-4">About the Project</h2>
-                                    <p className="text-muted-foreground leading-relaxed">
+                            <TabsContent value="overview" className="mt-7">
+                                <div className="max-w-none">
+                                    <h2 className="text-lg font-semibold mb-2 tracking-wide text-foreground">About the Project</h2>
+                                    <p className="text-muted-foreground mb-3 leading-relaxed">
                                         {farm.description}
                                     </p>
                                 </div>
 
-                                {/* ROI Calculator */}
-                                <div className="mt-8 bg-muted rounded-xl p-6">
-                                    <h3 className="font-semibold mb-4">ROI Example</h3>
+                                {/* Investment Details Section */}
+                                <div className="mt-8 mb-8">
+                                    <h3 className="text-md font-semibold mb-2 uppercase tracking-wider text-primary/80">Investment Details</h3>
+                                    <div className="flex flex-wrap gap-5 border border-border bg-card rounded-xl px-6 py-4">
+                                        <InvestmentDetail
+                                            icon={DollarSign}
+                                            label="Min. Invest"
+                                            value={formatFullCurrency(farm.minInvestment)}
+                                        />
+                                        <InvestmentDetail
+                                            icon={TrendingUp}
+                                            label="ROI"
+                                            value={farm.roiPercentage + "%"}
+                                        />
+                                        <InvestmentDetail
+                                            icon={Clock}
+                                            label="Duration"
+                                            value={farm.durationMonths + " Months"}
+                                        />
+                                        <InvestmentDetail
+                                            icon={Users}
+                                            label="Investors"
+                                            value={String(farm.investorCount)}
+                                        />
+                                        <InvestmentDetail
+                                            icon={Leaf}
+                                            label="Acres"
+                                            value={String(farm.acres)}
+                                        />
+                                        <InvestmentDetail
+                                            icon={CalendarCheck}
+                                            label="Harvest"
+                                            value={farm.harvestTime}
+                                        />
+                                    </div>
+                                </div>
+                                
+                                {/* ROI Example Calculator */}
+                                {/* <div className="mb-10 border border-border rounded-xl p-6 bg-muted/80">
+                                    <h3 className="font-semibold mb-4 text-primary/80 uppercase text-sm tracking-wider">ROI Example</h3>
                                     <div className="flex items-center gap-4 md:gap-8">
                                         <div>
-                                            <p className="text-sm text-muted-foreground mb-1">Your Investment</p>
-                                            <p className="text-3xl md:text-4xl font-bold">$100</p>
+                                            <p className="text-xs text-muted-foreground mb-1">Your Investment</p>
+                                            <p className="text-3xl md:text-4xl font-bold text-foreground">$100</p>
                                         </div>
-                                        <div className="text-primary">
+                                        <div className="text-primary flex flex-col items-center">
                                             <ArrowRight className="w-6 h-6" />
-                                            <p className="text-sm mt-1">{farm.durationMonths} Months</p>
+                                            <p className="text-xs mt-1 text-muted-foreground">{farm.durationMonths} Months</p>
                                         </div>
                                         <div>
-                                            <p className="text-sm text-muted-foreground mb-1">Estimated Return</p>
+                                            <p className="text-xs text-muted-foreground mb-1">Estimated Return</p>
                                             <p className="text-3xl md:text-4xl font-bold text-primary">
                                                 ${Math.round(100 * (1 + farm.roiPercentage / 100))}
                                             </p>
                                         </div>
                                     </div>
+                                </div> */}
+
+                                {/* Planting Location Map Section */}
+                                <div className="mb-10">
+                                    <h3 className="text-md font-semibold mb-2 uppercase tracking-wider text-primary/80">Planting Location</h3>
+                                    <div className="rounded-xl border border-border overflow-hidden max-w-full">
+                                        {/* Use embedded static map based on farm location, fallback if not available */}
+                                        <iframe
+                                            title={`Map for ${farm.location}`}
+                                            width="100%"
+                                            height="320"
+                                            style={{ border: 0 }}
+                                            loading="lazy"
+                                            className="w-full h-80 grayscale-[0.09]"
+                                            src={
+                                                `https://www.openstreetmap.org/export/embed.html?search=${encodeURIComponent(
+                                                    farm.location
+                                                )}&layer=mapnik`
+                                            }
+                                            referrerPolicy="no-referrer-when-downgrade"
+                                        />
+                                    </div>
                                 </div>
                             </TabsContent>
 
-                            <TabsContent value="updates" className="mt-6">
+                            <TabsContent value="updates" className="mt-7">
                                 <div className="space-y-4">
                                     <div className="bg-card border border-border rounded-lg p-4">
-                                        <p className="text-sm text-muted-foreground mb-1">Dec 10, 2024</p>
-                                        <h4 className="font-semibold mb-2">Planting Phase Complete</h4>
-                                        <p className="text-muted-foreground">Successfully completed the initial planting phase. Crops are showing excellent early growth.</p>
+                                        <p className="text-xs text-muted-foreground mb-0.5">Dec 10, 2024</p>
+                                        <h4 className="font-semibold mb-1 text-foreground">Planting Phase Complete</h4>
+                                        <p className="text-muted-foreground text-sm">Successfully completed the initial planting phase. Crops are showing excellent early growth.</p>
                                     </div>
                                     <div className="bg-card border border-border rounded-lg p-4">
-                                        <p className="text-sm text-muted-foreground mb-1">Nov 25, 2024</p>
-                                        <h4 className="font-semibold mb-2">Land Preparation Finished</h4>
-                                        <p className="text-muted-foreground">Completed soil preparation and irrigation system installation.</p>
+                                        <p className="text-xs text-muted-foreground mb-0.5">Nov 25, 2024</p>
+                                        <h4 className="font-semibold mb-1 text-foreground">Land Preparation Finished</h4>
+                                        <p className="text-muted-foreground text-sm">Completed soil preparation and irrigation system installation.</p>
                                     </div>
                                 </div>
                             </TabsContent>
@@ -223,58 +307,70 @@ export default function FarmDetailsPage() {
                     </div>
 
                     {/* Sidebar */}
-                    <div className="w-full lg:w-80">
-                        <div className="bg-card border border-border rounded-xl p-5 sticky top-6">
-                            <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="w-full lg:w-80 flex-shrink-0 mt-10 lg:mt-0">
+                        <div className="bg-card border border-border rounded-xl p-6 sticky top-6 flex flex-col gap-5">
+                            <div className="grid grid-cols-2 gap-4 mb-3">
                                 <div>
-                                    <p className="text-sm text-primary mb-1 flex items-center gap-1">
+                                    <p className="text-xs text-primary mb-0.5 flex items-center gap-1 uppercase tracking-wider">
                                         <MapPin className="w-3 h-3" /> Location
                                     </p>
-                                    <p className="font-medium">{farm.location}</p>
+                                    <p className="font-medium text-foreground">{farm.location}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-primary mb-1 flex items-center gap-1">
+                                    <p className="text-xs text-primary mb-0.5 flex items-center gap-1 uppercase tracking-wider">
                                         <Clock className="w-3 h-3" /> Duration
                                     </p>
-                                    <p className="font-medium">{farm.durationMonths} Months</p>
+                                    <p className="font-medium text-foreground">{farm.durationMonths} Months</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-primary mb-1 flex items-center gap-1">
+                                    <p className="text-xs text-primary mb-0.5 flex items-center gap-1 uppercase tracking-wider">
                                         <TrendingUp className="w-3 h-3" /> Projected ROI
                                     </p>
-                                    <p className="font-medium">{farm.roiPercentage}% APY</p>
+                                    <p className="font-medium text-foreground">{farm.roiPercentage}% APY</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-primary mb-1 flex items-center gap-1">
+                                    <p className="text-xs text-primary mb-0.5 flex items-center gap-1 uppercase tracking-wider">
                                         <Target className="w-3 h-3" /> Funding Goal
                                     </p>
-                                    <p className="font-medium">{formatFullCurrency(farm.targetAmount)}</p>
+                                    <p className="font-medium text-foreground">{formatFullCurrency(farm.targetAmount)}</p>
                                 </div>
                             </div>
 
-                            <div className="mb-6">
-                                <div className="flex items-center justify-between text-sm mb-1.5">
-                                    <span className="text-primary">Funding Progress</span>
-                                    <span className="font-medium">{progress}%</span>
+                            <div className="mb-2">
+                                <div className="flex items-center justify-between text-xs mb-1.5 uppercase tracking-wider">
+                                    <span className="text-primary font-semibold">Funding Progress</span>
+                                    <span className="font-medium text-foreground">{progress}%</span>
                                 </div>
-                                <div className="progress-bar">
+                                <div className="h-2.5 rounded-full bg-[#F0F0F0] overflow-hidden relative w-full border border-border">
                                     <div
-                                        className="progress-bar-fill"
-                                        style={{ width: `${progress}%` }}
-                                    />
+                                        className="h-full rounded-full transition-all duration-500"
+                                        style={{
+                                            width: `${progress}%`,
+                                            backgroundColor: "#FFC72C"
+                                        }}
+                                    ></div>
+                                    {progress > 5 && (
+                                        <div
+                                            className="absolute -top-1 h-4 w-4 rounded-full border-2 border-white bg-[#FFC72C] transition-all duration-500"
+                                            style={{
+                                                left: `calc(${progress}% - 8px)`,
+                                                zIndex: 2
+                                            }}
+                                        ></div>
+                                    )}
                                 </div>
-                                <p className="text-sm text-muted-foreground mt-1.5">
+                                <p className="text-xs text-muted-foreground mt-1.5">
                                     {formatFullCurrency(farm.currentAmount)} of {formatFullCurrency(farm.targetAmount)}
                                 </p>
                             </div>
 
                             <div className="flex gap-3">
-                                <Button variant="outline" className="flex-1">
+                                <Button variant="outline" className="flex-1 font-medium rounded-lg border border-primary text-primary hover:bg-secondary">
                                     <Plus className="w-4 h-4 mr-1" />
                                     Add to Watchlist
                                 </Button>
                                 <Button
-                                    className="flex-1 btn-primary-gradient"
+                                    className="flex-1 bg-primary text-primary-foreground font-semibold rounded-lg"
                                     onClick={() => setShowInvestment(true)}
                                 >
                                     Invest Now

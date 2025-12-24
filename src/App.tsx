@@ -13,6 +13,7 @@ import TransactionsPage from "./pages/TransactionsPage";
 import NewsPage from "./pages/NewsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import NotFound from "./pages/NotFound";
+import AddNewInvestment from "./pages/AddNewInvestment";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
                     <Route path="/news" element={<NewsPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />} />
                     <Route path="/admin/farms" element={<AdminDashboardPage />} />
+                    <Route path="/admin/farm/new" element= {<AddNewInvestment/>}/>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
