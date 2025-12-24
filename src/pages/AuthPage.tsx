@@ -123,7 +123,7 @@ export default function AuthPage() {
                     </div>
 
                     <div className="mb-8">
-                        <p className="text-muted-foreground mb-1">Start for free</p>
+                        <p className="text-muted-foreground mb-1">Welcome! Please sign in or create a new account below.</p>
                         <h1 className="text-3xl font-bold text-foreground">
                             {mode === "signin" ? "Sign In" : "Sign Up"} to{" "}
                             <span className="text-primary">AYF</span>

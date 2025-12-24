@@ -113,7 +113,7 @@ export default function AdminReportsPage() {
 
                 {/* Stats summary cards - Add subtle hover effect, focus outlines */}
                 <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {stats.map((stat, i) => (
+                    {stats.map((stat) => (
                         <div key={stat.label} tabIndex={0} aria-label={stat.label}
                             className="transition ring-primary/15 focus-visible:ring-4 focus-visible:outline-none hover:shadow-md duration-150"
                         >
@@ -231,7 +231,7 @@ export default function AdminReportsPage() {
                         </header>
                         <ul className="divide-y divide-border">
                             {recentActivities.length > 0 ? (
-                                recentActivities.map((a, i) => (
+                                recentActivities.map((a, idx) => (
                                     <li
                                         key={a.id}
                                         tabIndex={0}
@@ -239,7 +239,7 @@ export default function AdminReportsPage() {
                                             "px-6 py-4 flex items-start gap-4 group transition hover:bg-muted/30 focus-visible:ring-2 ring-primary/30 focus:outline-none",
                                             a.color || ""
                                         )}
-                                        style={{ animation: `slide-up 400ms ${i * 40}ms both` }}
+                                        style={{ animation: `slide-up 400ms ${idx * 40}ms both` }}
                                     >
                                         <span
                                             className={cn(
