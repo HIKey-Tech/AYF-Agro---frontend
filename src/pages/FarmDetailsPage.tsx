@@ -11,7 +11,7 @@ import {
     mockFarms,
     formatFullCurrency,
     calculateFundingProgress,
-    calculateExpectedReturn
+    // calculateExpectedReturn
 } from "@/lib/mock-data";
 import { ArrowRight, Plus, Shield, MapPin, Clock, TrendingUp, Target } from "lucide-react";
 import { toast } from "sonner";
@@ -37,7 +37,7 @@ export default function FarmDetailsPage() {
 
     const progress = calculateFundingProgress(farm.currentAmount, farm.targetAmount);
     const amount = parseFloat(investmentAmount) || 0;
-    const expectedReturn = calculateExpectedReturn(amount, farm.roiPercentage);
+    // const expectedReturn = calculateExpectedReturn(amount, farm.roiPercentage);
 
     const expectedPayoutDate = new Date();
     expectedPayoutDate.setMonth(expectedPayoutDate.getMonth() + farm.durationMonths);
