@@ -14,6 +14,8 @@ export interface Farm {
     roiPercentage: number;
     durationMonths: number;
     investorCount: number;
+    acres: number;
+    harvestTime: string;
     status: "funding" | "active" | "closed";
     createdAt: string;
 }
@@ -53,6 +55,8 @@ export const mockFarms: Farm[] = [
         roiPercentage: 15,
         durationMonths: 6,
         investorCount: 250,
+        acres: 150,
+        harvestTime: "October 2024",
         status: "funding",
         createdAt: "2024-01-15",
     },
@@ -68,6 +72,8 @@ export const mockFarms: Farm[] = [
         roiPercentage: 18.5,
         durationMonths: 12,
         investorCount: 320,
+        acres: 234,
+        harvestTime: "February 2025",
         status: "funding",
         createdAt: "2024-02-01",
     },
@@ -83,6 +89,8 @@ export const mockFarms: Farm[] = [
         roiPercentage: 20,
         durationMonths: 18,
         investorCount: 450,
+        acres: 310,
+        harvestTime: "April 2025",
         status: "active",
         createdAt: "2023-10-01",
     },
@@ -98,6 +106,8 @@ export const mockFarms: Farm[] = [
         roiPercentage: 16,
         durationMonths: 24,
         investorCount: 280,
+        acres: 190,
+        harvestTime: "March 2026",
         status: "funding",
         createdAt: "2024-03-01",
     },
@@ -113,6 +123,8 @@ export const mockFarms: Farm[] = [
         roiPercentage: 15,
         durationMonths: 12,
         investorCount: 180,
+        acres: 110,
+        harvestTime: "June 2024",
         status: "closed",
         createdAt: "2023-06-01",
     },
@@ -128,6 +140,8 @@ export const mockFarms: Farm[] = [
         roiPercentage: 20,
         durationMonths: 36,
         investorCount: 150,
+        acres: 90,
+        harvestTime: "December 2026",
         status: "funding",
         createdAt: "2024-01-20",
     },

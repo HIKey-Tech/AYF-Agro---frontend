@@ -5,46 +5,114 @@ interface InvestmentCardProps {
 }
 
 export function InvestmentCard({ investment }: InvestmentCardProps) {
+    // Improved InfoPill for better visual contrast and spacing
+    const InfoPill = ({
+        label,
+        value,
+        bold,
+    }: {
+        label: string;
+        value: string | number;
+        bold?: boolean;
+    }) => (
+        <span
+            className={`inline-flex items-center px-3 py-1 rounded-md ${
+                bold
+                    ? "bg-[#FFF8E1] text-[#AB8300]"
+                    : "bg-muted text-foreground/90"
+            } text-[15px] font-medium mr-2 mb-2 whitespace-nowrap`}
+            style={bold ? { border: "1px solid #FFD740" } : {}}
+        >
+            {bold ? (
+                <>
+                    <span className="font-semibold mr-1">{value}</span>
+                    {label}
+                </>
+            ) : (
+                <>
+                    <span className="mr-1">{value}</span>
+                    {label}
+                </>
+            )}
+        </span>
+    );
+
+    const farm = investment.farm;
+
     return (
-        <div className="card-elevated rounded-xl overflow-hidden border border-border">
-            <div className="aspect-[16/10] overflow-hidden">
+        <div className="rounded-xl overflow-hidden border border-border bg-white transition-shadow duration-300 group">
+            <div className="relative aspect-[16/10] overflow-hidden">
                 <img
-                    src={investment.farm.image}
-                    alt={investment.farm.name}
+                    src={farm.image}
+                    alt={farm.name}
                     className="w-full h-full object-cover"
                 />
             </div>
+            <div className="p-5 pb-4">
+                {/* Title and Days Remaining */}
+                <div className="flex items-baseline justify-between mb-1">
+                    <h3 className="font-bold text-xl text-foreground leading-snug truncate">{farm.name}</h3>
+                    <span className="ml-3 text-xs text-foreground/70 font-semibold px-2 py-0.5 rounded bg-accent">
+                        <span className="text-primary font-bold">{investment.daysRemaining}</span>{" "}Days Left
+                    </span>
+                </div>
+                <p className="text-base text-gray-500 mb-1">{farm.location}</p>
 
-            <div className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-semibold text-foreground">{investment.farm.name}</h3>
-                    <span className="text-sm text-primary font-medium">
-                        {investment.daysRemaining} Days Remaining
+                {/* Info Pills Row */}
+                <div className="flex flex-wrap gap-1 mb-4">
+                    {farm.acres && (
+                        <InfoPill value={farm.acres} label="Acres" bold />
+                    )}
+                    <InfoPill value={`${farm.roiPercentage}%`} label="ROI" bold />
+                    <InfoPill value={`${farm.durationMonths}`} label="Months" bold />
+                    {farm.harvestTime && (
+                        <InfoPill value={farm.harvestTime} label="Harvest" />
+                    )}
+                </div>
+
+                {/* Progress bar label */}
+                <div className="mb-3">
+                    <div className="flex items-center justify-between text-xs font-semibold mb-1">
+                        <span className="uppercase tracking-wider text-[#A6A6A6]">Cycle Progress</span>
+                        <span className="text-primary">{investment.progress}%</span>
+                    </div>
+                    <div className="w-full h-2.5 rounded-full bg-[#ECECEC] overflow-hidden relative">
+                        <div
+                            className="h-full rounded-full"
+                            style={{
+                                width: `${investment.progress}%`,
+                                background: "#FFD740"
+                            }}
+                        />
+                    </div>
+                </div>
+
+                {/* Amount Invested & Expected Return */}
+                <div className="flex items-center justify-between text-xs mb-4">
+                    <span>
+                        <span className="text-[#807300] font-bold">${investment.amount.toLocaleString()}</span>{" "}
+                        <span className="text-muted-foreground">invested</span>
+                    </span>
+                    <span>
+                        <span className="text-green-700 font-bold">${investment.expectedReturn.toLocaleString()}</span>{" "}
+                        <span className="text-muted-foreground">expected return</span>
                     </span>
                 </div>
 
-                <div className="space-y-1 mb-3">
-                    <p className="text-sm">
-                        <span className="text-muted-foreground">Amount Invested: </span>
-                        <span className="font-semibold">${investment.amount.toLocaleString()}</span>
-                    </p>
-                    <p className="text-sm">
-                        <span className="text-muted-foreground">Projected ROI: </span>
-                        <span className="font-semibold">{investment.farm.roiPercentage}%</span>
-                    </p>
-                </div>
-
-                <div>
-                    <div className="flex items-center justify-between text-sm mb-1.5">
-                        <span className="text-muted-foreground">Investment Cycle</span>
-                        <span className="font-medium text-primary">{investment.progress}%</span>
-                    </div>
-                    <div className="progress-bar">
-                        <div
-                            className="progress-bar-fill bg-accent"
-                            style={{ width: `${investment.progress}%` }}
-                        />
-                    </div>
+                {/* Action Buttons */}
+                <div className="flex gap-2">
+                    <button
+                        className="flex-1 h-10 border border-primary text-primary font-semibold bg-white rounded-lg transition-colors hover:bg-accent focus:outline-none text-sm"
+                        type="button"
+                    >
+                        View Details
+                    </button>
+                    <button
+                        className="flex-1 h-10 bg-primary text-white font-semibold rounded-lg transition-colors hover:brightness-105 focus:outline-none text-sm"
+                        type="button"
+                    >
+                        Invest Again
+                    </button>
                 </div>
             </div>
         </div>
