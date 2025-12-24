@@ -10,23 +10,45 @@ interface StatsCardProps {
     className?: string;
 }
 
-export function StatsCard({ label, value, trend, trendLabel, icon, className }: StatsCardProps) {
+export function StatsCard({
+    label,
+    value,
+    trend,
+    trendLabel,
+    icon,
+    className,
+}: StatsCardProps) {
     const isPositive = trend?.startsWith("+");
 
     return (
-        <div className={cn("stat-card", className)}>
-            <div className="flex items-center gap-2 text-muted-foreground mb-2">
+        <div
+            className={cn(
+                "stat-card rounded-lg border border-border bg-card px-5 py-4 flex flex-col items-start", 
+                "transition-colors", // No shadow, plain border
+                className
+            )}
+        >
+            <div className="flex items-center gap-2 mb-1">
                 {icon || <TrendingUp className="w-4 h-4 text-primary" />}
-                <span className="text-sm">{label}</span>
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    {label}
+                </span>
             </div>
-            <p className="text-2xl font-bold text-foreground">{value}</p>
+            <span className="mt-2 text-3xl font-extrabold text-foreground leading-tight">
+                {value}
+            </span>
             {trend && (
-                <p className={cn(
-                    "text-sm mt-1",
-                    isPositive ? "text-primary" : "text-muted-foreground"
-                )}>
-                    {trend} {trendLabel}
-                </p>
+                <span
+                    className={cn(
+                        "mt-1 text-xs font-medium tracking-wide",
+                        isPositive ? "text-primary" : "text-muted-foreground"
+                    )}
+                >
+                    {trend}{" "}
+                    <span className="font-normal text-muted-foreground">
+                        {trendLabel}
+                    </span>
+                </span>
             )}
         </div>
     );

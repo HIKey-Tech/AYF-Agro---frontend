@@ -14,6 +14,10 @@ import NewsPage from "./pages/NewsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import NotFound from "./pages/NotFound";
 import AddNewInvestment from "./pages/AddNewInvestment";
+import AdminReports from "./pages/AdminReports";
+import AdminTransactionsPage from "./pages/AdminTransactionsPage";
+import AdminInvestor from "./pages/AdminInvestor";
+import AdminFarmPage from "./pages/AdminFarm";
 
 const queryClient = new QueryClient();
 
@@ -33,8 +37,11 @@ const App = () => (
                     <Route path="/transactions" element={<TransactionsPage />} />
                     <Route path="/news" element={<NewsPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />} />
-                    <Route path="/admin/farms" element={<AdminDashboardPage />} />
-                    <Route path="/admin/farm/new" element= {<AddNewInvestment/>}/>
+                    <Route path="/admin/farms" element={<AdminFarmPage />} />
+                    <Route path="/admin/farm/new" element={<AddNewInvestment />} />
+                    <Route path="/admin/reports" element={<AdminReports />} />
+                    <Route path="/admin/transactions" element={<AdminTransactionsPage />} />
+                    <Route path="/admin/investors" element={<AdminInvestor />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
